@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ec53b5716964e91b172202e9ae7edf6" Name="Diagram1">
+        <EntityTypeShape EntityType="STEmreDBModel.Depolar" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.HareketTur" Width="1.5" PointX="3.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.Kullanici" Width="1.5" PointX="3.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.Raflar" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.Tedarikci" Width="1.5" PointX="3.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.UrunHareket" Width="1.5" PointX="6" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="STEmreDBModel.Urunler" Width="1.5" PointX="3.75" PointY="14.625" IsExpanded="true" />
+        <AssociationConnector Association="STEmreDBModel.FK_Raf_Depo" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Depolar" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Depolar1" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_Kullanici_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Tedarikci" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Urunler" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Urunler1" ManuallyRouted="false" />
+        <AssociationConnector Association="STEmreDBModel.FK_UrunHareket_Urunler3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

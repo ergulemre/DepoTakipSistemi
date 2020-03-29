@@ -1,0 +1,227 @@
+﻿@model YeniTakip.Models.UrunDetaylar
+
+@{
+    ViewBag.Title = "UrunEklemeCikarma";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="~/vendor/jquery/jquery.min.js"></script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="container">
+                <h2>Ürün Ekleme </h2>
+                @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "grey-corner-box", @id = "contact-us-form", @name = "register_form" }))
+                {
+                    <div class="form-horizontal" action="/action_page.php">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="urunkodu">Urun Kodu:</label>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input class="form-control" id="urunkodu" placeholder="Kodunu Giriniz" name="UrunKodu">
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <button type="button" id="btnDty" class="btn btn-success">Ürün Detayları</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-7">
+                                    @*@if (ViewBag.durum != null)
+                                    {
+                                        <span style="color:darkred">@ViewBag.durum</span>
+                                    }*@
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="urunkodu">Hareket Turu :</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="scltHrkt" onchange="scltHareket()" name="HareketTurID">
+                                    @*@foreach (var item in ViewBag.hareketbilgileri)
+                                    {
+                                        <option value="@item.HareketTurID"> @item.HareketTurAdi</option>
+                                    }*@
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="klnc">
+                            <label class="control-label col-sm-2" for="KullaniciAdi">Kullanici :</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="KullaniciID">
+                                    @*@foreach (var item in ViewBag.kullanicibilgileri)
+                                    {
+                                        <option value="@item.KullaniciID">@item.KullaniciAdi</option>
+                                    }*@
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="tdrk">
+                            <label class="control-label col-sm-2" for="TedarikciAdi">Tedarikci:</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="TedarikciID">
+                                    @*@foreach (var item in ViewBag.tedarikcibilgileri)
+                                    {
+
+                                        <option value="@item.TedarikciID">@item.TedarikciAdi</option>
+                                    }*@
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="Deposecme">Depo :</label>
+                            <div class="col-sm-7">
+                                <select id="Deposecme" class="form-control" name="DepoID">
+                                    @*@foreach (var item in ViewBag.depoidleri)
+                                    {
+                                        <option value="@item.DepoID">@item.DepoAdi</option>
+                                    }*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="Tarih Secme"> Tarih </label>
+                            <div class="col-sm-7">
+                                <input type="date" name="Tarih" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="urunadet">Ürün Adeti :</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" name="UrunAdeti">
+                            </div>
+                            <div class="col-sm-7">
+                                @*@if (ViewBag.durum2 != null)
+                                {
+                                    <span style="color:darkred"> @ViewBag.durum2</span>
+                                }*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Kaydet</button>
+                                <button type="submit" id="btnRpr" class="btn btn-success">İşlem Raporu Getir</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            @*@{
+                                if (ViewBag.durum3 != null)
+                                {
+                                    <span style="color:darkred"> @ViewBag.durum3</span>
+                                }
+                            }*@
+                        </div>
+                    </div>
+                                }
+            </div>
+        </div>
+        <div class="col-md-4 mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Ürün Boyutu</th>
+                        <th>Ürün Adeti</th>
+                    </tr>
+                </thead>
+                <tbody id="sutunlar">
+                    
+                </tbody>
+            </table>
+
+        </div>
+        
+    </div>    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        scltHareket();
+        
+        $('#btnDty').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/GirdiCikti/UrunGetir",
+                data: "{UrunKod:'" + $('#urunkodu').val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('#sutunlar').html("");
+                    if (response.UrunID != 0) {
+                        var satir = "<tr><td>" + response.UrunAdi + "</td><td>" + response.UrunBoyutu + "</td><td>" + response.UrunAdeti + "</td></tr>";
+                        $('#sutunlar').append(satir);
+                    }
+                    else {
+                        alert("Ürün Bulunamadı");
+                    }
+                }
+            });
+        });
+    });
+
+    //    $('btnRpr').click(function(){
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/GirdiCikti/RaporGetir",
+    //        data: "{UrunKod:'" + $('#urunkodu').val() + "'}",
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            $('#raportablosu').html("");
+    //            if(response.UrunID!=0){
+    //                var satir1 = "<tr><td>"+response.Tarih + "Tarihinde" + +response.UrunAdi +"adlı üründen" +response.UrunAdeti + "adet ürün" +response.DepoID + "numaralı depoya(dan)" +response.scltHrkt + "işlemi yapılmıştır."+ "</td></tr>"
+    //                $('#raportablosu').append(satir1);
+    //            }
+    //            else {
+    //                alert("Ürün Kaydı Yapınız.");
+    //            }
+    //        }
+    //    });
+    //});
+
+    function scltHareket() {
+
+        if (scltHrkt.value == 35) {
+            tdrk.style.display = 'none';
+            klnc.style.display = '';
+        }
+        else if (scltHrkt.value == 36) {
+            klnc.style.display = 'none';
+            tdrk.style.display = '';
+        }
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

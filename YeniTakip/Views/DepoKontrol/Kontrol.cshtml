@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Kontrol";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Depo Adı</th>
+                <th>Toplam Alan</th>
+                <th>Ürünlerin Kapladığı Alan</th>
+                <th>Kalan Alan</th>
+            </tr>
+        </thead>
+        @{
+            foreach (var item in ViewBag.depodetaylari)
+            {
+                <tr>
+                    <td>@item.DepoAdi</td>
+                    <td>@item.ToplamAlan</td>
+                    <td>@item.KapladigiAlan</td>
+                    <td>@item.KalanAlan</td>
+                </tr>
+            }           
+        }
+    </table>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Depo Adı</th>
+                <th>Raf Toplam Alanı</th>
+                <th>Raftaki Ürünlerin Alanı</th>
+                <th>Kalan Alan</th>
+        </thead>
+        @{
+            foreach (var x in ViewBag.rafdetaylari)
+            {
+                <tr>
+                    <td>@x.DepoAdi</td>
+                    <td>@x.Raftoplamalan</td>
+                    <td>@x.Rafkaplananalan</td>
+                    <td>@x.Rafkalanalan</td>
+                </tr>
+            }
+
+
+        }
+    </table>
+</div>

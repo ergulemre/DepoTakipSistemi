@@ -1,0 +1,192 @@
+﻿@model List<GetUrunMevcutListe_Result>
+
+@{
+    ViewBag.Title = "UrunSorgulama";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/vendor/jquery/jquery.js"></script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="btnUrun" href="#UrunAd" role="tab" data-toggle="tab">Ürün Koduna Göre Arama</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Depo" id="btnDepo" role="tab" data-toggle="tab">Depoya Göre Arama</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade show active" id="UrunAd">
+        @using (Html.BeginForm("Sorgula", "UrunSorgulama", FormMethod.Post))
+        {
+            <div class="container">
+                <br />
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <form class="card card-sm">
+                            <div class="card-body row no-gutters align-items-center">
+                                <div class="col">
+                                    @Html.TextBox("searching", null, new { @class = "form-control form-control-lg form-control-borderless", @placeholder = "Barkod Giriniz" })
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-default" id="btn">
+                                        <span class="fa fa-search"></span> Search
+                                    </button>
+                                </div>
+                                <!--end of col-->
+                            </div>
+                        </form>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </div>
+        }
+
+
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Depo Adı</th>
+                        <th>Urun Kodu</th>
+                        <th>Ürün Adı</th>
+                        <th>Kalan Ürün Adedi</th>
+
+
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            @if (item.Kalan >= 2)
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.DepoAdi)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UrunKodu)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UrunAdi)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Kalan)</td>
+
+
+                            }
+                            else
+                            {
+                                <td bgcolor="red">@Html.DisplayFor(modelItem => item.DepoAdi)</td>
+                                <td bgcolor="red">@Html.DisplayFor(modelItem => item.UrunKodu)</td>
+                                <td bgcolor="red">@Html.DisplayFor(modelItem => item.UrunAdi)</td>
+                                <td bgcolor="red">@Html.DisplayFor(modelItem => item.Kalan)</td>
+
+                            }
+                        </tr>
+                    }
+                }
+
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <div role="tabpanel" class="tab-pane fade" id="Depo">
+        @using (Html.BeginForm("DepoyaGoreSorgula", "UrunSorgulama", FormMethod.Post))
+        {
+            <div class="container" id="depom">
+                <br />
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <form class="card card-sm">
+                            <div class="card-body row no-gutters align-items-center">
+                                <div class="col">
+                                    <select class="form-control" name="depo">
+                                        @if (ViewBag.cantam != null)
+                                        {
+                                            foreach (var x in ViewBag.cantam)
+                                            {
+                                                <option value="@x.DepoID">@x.DepoAdi</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-default" id="depobtn">
+                                        <span class="fa fa-search"></span> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Depo Adı</th>
+                        <th>Ürün Kodu</th>
+                        <th>Ürün Adı</th>
+                        <th>Kalan Ürün Adedi</th>
+
+
+                    </tr>
+                </thead>
+                @if (ViewBag.canta != null)
+                {
+                    foreach (var item in ViewBag.canta)
+                    {
+                        <tr>
+                            @if (item.Kalan >= 2)
+                            {
+                                <td>@item.DepoAdi</td>
+                                <td>@item.UrunKodu</td>
+                                <td>@item.UrunAdi</td>
+                                <td>@item.Kalan</td>
+
+
+                            }
+                            else
+                            {
+                                <td bgcolor="red">@item.DepoAdi</td>
+                                <td bgcolor="red">@item.UrunKodu</td>
+                                <td bgcolor="red">@item.UrunAdi</td>
+                                <td bgcolor="red">@item.Kalan</td>
+
+                            }
+                        </tr>
+                    }
+                }
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.canta != null)
+{
+    <script>
+
+        $('#UrunAd').removeClass("show");
+        $('#UrunAd').removeClass("active");
+        $('#Depo').addClass("show");
+        $('#Depo').addClass("active");
+        $('#btnUrun').removeClass("active");
+        $('#btnDepo').addClass("active");
+    </script>
+}

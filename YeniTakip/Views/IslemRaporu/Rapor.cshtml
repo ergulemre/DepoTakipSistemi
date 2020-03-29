@@ -1,0 +1,106 @@
+﻿@model YeniTakip.Models.Islemler
+@{
+    ViewBag.Title = "Rapor";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="container">
+                <h2>İşlem Raporu Alma </h2>
+                @using (Html.BeginForm("Rapor", "IslemRaporu", FormMethod.Post, new { @class = "grey-corner-box", @id = "contact-us-form", @name = "register_form" }))
+                {
+                    <div class="form-horizontal" action="/action_page.php">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="urunkodu">Urun Kodu:</label>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input class="form-control" id="urunkodu" placeholder="Kodunu Giriniz" name="UrunKodu">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                @*@if (ViewBag.durum != null)
+                                {
+                                    <span style="color:darkred">@ViewBag.durum</span>
+                                }*@
+                            </div>
+                        </div>                    
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="Deposecme">Depo :</label>
+                            <div class="col-sm-7">
+                                <select id="Deposecme" class="form-control" name="DepoID">
+                                    @foreach (var item in ViewBag.depoidleri)
+                                    {
+                                        <option value="@item.DepoID">@item.DepoAdi</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="Tarih Secme">Baslangıç Tarihi </label>
+                            <div class="col-sm-7">
+                                <input type="date" name="BaslangicTarihi" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="Tarih Secme">Bitiş Tarihi </label>
+                            <div class="col-sm-7">
+                                <input type="date" name="BitisTarihi" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" id="btnRpr" class="btn btn-success">İşlem Raporu Getir</button>
+                            </div>
+                        </div>                    
+                        </div>
+                }    
+                <div class="container">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Depo Adı</th>
+                                <th>Ürün Kodu</th>
+                                <th>Kullanıcı Adı</th>
+                                <th>Tedarikçi Adı</th>
+                                <th>İşlem Türü</th>
+                                <th>İşlem Tarihi</th>
+
+
+                            </tr>
+                        </thead>
+                        @if (ViewBag.sonuc != null)
+                        {
+                            foreach (var item in ViewBag.sonuc)
+                            {
+                                <tr>
+                                    <td>@item.DepoAdi</td>
+                                    <td>@item.UrunKodu</td>
+                                    <td>@item.KullaniciAdi</td>
+                                    <td>@item.TedarikciAdi</td>
+                                    <td>@item.HareketTurAdi</td>
+                                    <td>@item.Tarih</td>
+                                </tr>
+                            }
+
+                        }
+                        
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
